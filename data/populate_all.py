@@ -1,0 +1,61 @@
+import MySQLdb
+
+
+def open_connection():
+    db = MySQLdb.connect(
+        host='localhost',
+        user='root',
+        passwd='pass',
+        db='freq_dict',
+        charset='utf8',
+        use_unicode=True
+    )
+    cursor = db.cursor()
+    return db, cursor
+
+
+def create_table(cursor):
+    cursor.execute("CREATE TABLE IF NOT EXISTS lemmata_all ("
+                   "id integer primary key auto_increment not null,"
+                   "lemma char(50),"
+                   "pos char(20),"
+                   "freq_ipm decimal(10,1),"
+                   "segm_range int,"
+                   "d_coeff int,"
+                   "doc int"
+                   ");")
+
+
+def populate(db, cursor):
+    f = open('lemmata_all.tsv', 'r')
+    for line in f:
+        line = line.rstrip().split('\t')
+        cmd = 'INSERT INTO lemmata_all (lemma, pos, freq_ipm, segm_range, d_coeff, doc)' \
+              'VALUES ("{}","{}",{},{},{},{})'.format(*line)
+        cursor.execute(cmd)
+    db.commit()
+
+
+def check(cursor):
+    cmd = 'SELECT * FROM lemma_freq WHERE lemma="человек"'
+    cursor.execute(cmd)
+    # data = cursor.fetchall()
+    data = cursor.fetchone()
+    print(data)
+    # for row in data:
+    #     print(row)
+
+
+def close_connection(db):
+    db.close()
+
+
+def main():
+    db, cursor = open_connection()
+    create_table(cursor)
+    populate(db, cursor)
+    # check(cursor)
+    close_connection(db)
+
+if __name__ == '__main__':
+    main()
