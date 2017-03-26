@@ -15,32 +15,26 @@ def open_connection():
 
 
 def create_table(cursor):
-    cursor.execute("CREATE TABLE IF NOT EXISTS lemmata_by_year ("
+    cursor.execute("CREATE TABLE IF NOT EXISTS lemmata_spoken ("
                    "id integer primary key auto_increment not null,"
                    "lemma char(50),"
                    "pos char(20),"
-                   "fiction_50_60 decimal(10,1),"
-                   "fiction_70_80 decimal(10,1),"
-                   "fiction_90_00 decimal(10,1),"
-                   "news_50_60 decimal(10,1),"
-                   "news_70_80 decimal(10,1),"
-                   "news_90_00 decimal(10,1)"
+                   "freq_ipm decimal(10,1)"
                    ");")
 
 
 def populate(db, cursor):
-    f = open('lemmata_by_year.tsv', 'r')
+    f = open('lemmata_spoken.tsv', 'r')
     for line in f:
         line = line.rstrip().split('\t')
-        cmd = 'INSERT INTO lemmata_by_year (lemma,pos, fiction_50_60, fiction_70_80, fiction_90_00,' \
-              'news_50_60, news_70_80, news_90_00)' \
-              'VALUES ("{}","{}",{},{},{},{},{},{})'.format(*line)
+        cmd = 'INSERT INTO lemmata_spoken (lemma, pos, freq_ipm) ' \
+              'VALUES ("{}","{}",{})'.format(*line)
         cursor.execute(cmd)
     db.commit()
 
 
 def check(cursor):
-    cmd = 'SELECT * FROM lemma_freq WHERE lemma="человек"'
+    cmd = 'SELECT * FROM lemmata_spoken WHERE lemma="человек"'
     cursor.execute(cmd)
     # data = cursor.fetchall()
     data = cursor.fetchone()
