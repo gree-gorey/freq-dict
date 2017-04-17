@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from general_dict import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    #url(r'^.+?$', views.index, name='index'),
+    url(r'gen_dict', views.gen_dict, name='gen_dict'),
+    url(r'gram_dict', views.gram_dict, name='gram_dict'),
+    url(r'about', views.about, name='about'),
+    url(r'^$', views.index, name='index'),
 ]
