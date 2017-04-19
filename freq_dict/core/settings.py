@@ -25,7 +25,7 @@ SECRET_KEY = '1!k4@agpagptr#eq8!bi1mnd)eai6k1e1(%1^ggs52e(o=%lda'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['freqdict.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -118,3 +118,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
