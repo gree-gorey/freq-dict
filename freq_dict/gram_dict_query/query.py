@@ -1,13 +1,14 @@
 import os
 from .ssh import get_paradigm
+from .secrets import secrets
 # from ssh import get_paradigm
 
 
 def get_table(lemma='человек'):
     result = get_paradigm(
         lemma=lemma,
-        user=os.environ['DB_USER'],
-        passwd=os.environ['DB_PASS'],
+        user=secrets['DB_USER'],
+        passwd=secrets['DB_PASS'],
         db='RNCgram'
     )
     word = {}

@@ -1,6 +1,7 @@
 import sshtunnel
 import MySQLdb
 import os
+from .secrets import secrets
 
 
 def ssh_decorator(host, ssh_user, ssh_passwd):
@@ -19,8 +20,8 @@ def ssh_decorator(host, ssh_user, ssh_passwd):
         return func_wrapper
     return inner_ssh_decorator
 
-
-@ssh_decorator(host=os.environ['HOST'], ssh_user=os.environ['SSH_USER'], ssh_passwd=os.environ['SSH_PASS'])
+# @ssh_decorator(host=os.environ['HOST'], ssh_user=os.environ['SSH_USER'], ssh_passwd=os.environ['SSH_PASS'])
+@ssh_decorator(host=secrets['HOST'], ssh_user=secrets['SSH_USER'], ssh_passwd=secrets['SSH_PASS'])
 def get_paradigm(lemma, user, passwd, db):
     db = MySQLdb.connect(
         host='127.0.0.1',
