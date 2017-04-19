@@ -1,7 +1,8 @@
 import os
-from .ssh import get_paradigm
-from .secrets import secrets
-# from ssh import get_paradigm
+# from .ssh import get_paradigm
+# from .secrets import secrets
+from secrets import secrets
+from ssh import get_paradigm
 
 
 def get_table(lemma='человек'):
@@ -13,7 +14,7 @@ def get_table(lemma='человек'):
     )
     word = {}
     for row in result:
-        # print(row)
+        print(row)
         pos = row[5]
         if pos == 'S':
             word_form = row[1]
@@ -26,4 +27,6 @@ def get_table(lemma='человек'):
                 word[key].append((word_form, freq))
     return word
 
-# get_table()
+
+if __name__ == '__main__':
+    get_table()

@@ -1,7 +1,8 @@
 import sshtunnel
 import MySQLdb
 import os
-from .secrets import secrets
+# from .secrets import secrets
+from secrets import secrets
 
 
 def ssh_decorator(host, ssh_user, ssh_passwd):
