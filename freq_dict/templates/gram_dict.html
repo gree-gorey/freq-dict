@@ -5,7 +5,7 @@
   <form>
     <div class="form-group row">
       <div class="col-sm-10" id="search">
-        <div id="field"><input autocomplete="off" class="input" id="field1" name="lemma1" type="text" placeholder="Lemma" data-items="8"/></div>
+        <div id="field"><input autocomplete="off" class="input" id="field1" name="lemma" type="text" placeholder="Lemma" data-items="8"/></div>
       </div>
     </div>
     <fieldset class="form-group row">
@@ -74,55 +74,56 @@
 {% if error is not None %}
 <p>Sorry, we could not find anything.</p>
 {% else %}
+    <p>Lemma <b>{{ lemma }}</b></p>
 <table class="table table-responsive table-bordered">
     <thead>
-        <th>Падеж</th>
-        <th>Ед.ч.</th>
+        <th>Case</th>
+        <th>Sg</th>
         <th>freq</th>
-        <th>Ед.ч.</th>
+        <th>Pl</th>
         <th>freq</th>
     </thead>
     <tr>
         <th>Nom.</th>
-        <td>{% for i in word.nomsg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.nomsg %}<p>i[1]</p>{% endfor %}</td>
-        <td>{% for i in word.nompl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.nompl %}<p>i[1]</p>{% endfor %}</td>
+        <td>{% for i in word.nomsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nomsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nompl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nompl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Gen.</th>
-        <td>{% for i in word.gensg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.gensg %}<p>i[1]</p>{% endfor %}</td>
-        <td>{% for i in word.genpl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.genpl %}<p>i[1]</p>{% endfor %}</td>
+        <td>{% for i in word.gensg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.gensg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.genpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.genpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Acc.</th>
-        <td>{% for i in word.accsg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.accsg %}<p>i[1]</p>{% endfor %}</td>
-        <td>{% for i in word.accpl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.accpl %}<p>i</p>{% endfor %}</td>
+        <td>{% for i in word.accsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Dat.</th>
-        <td>{% for i in word.datsg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.datsg %}<p>i</p>{% endfor %}</td>
-        <td>{% for i in word.datpl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.datpl %}<p>i</p>{% endfor %}</td>
+        <td>{% for i in word.datsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Ins.</th>
-        <td>{% for i in word.inssg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.inssg %}<p>i[1]</p>{% endfor %}</td>
-        <td>{% for i in word.inspl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.inspl %}<p>i[1]</p>{% endfor %}</td>
+        <td>{% for i in word.inssg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inssg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inspl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inspl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Loc.</th>
-        <td>{% for i in word.locsg %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.locsg %}<p>i[1]</p>{% endfor %}</td>
-        <td>{% for i in word.locpl %}<p>i[0]</p>{% endfor %}</td>
-        <td>{% for i in word.locpl %}<p>i[1]</p>{% endfor %}</td>
+        <td>{% for i in word.locsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
     </tr>
 </table>
 {% endif %}
