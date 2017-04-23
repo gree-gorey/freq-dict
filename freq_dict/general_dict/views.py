@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from general_dict.models import General, ByYear, ByGenre
-from gram_dict_query.query import get_table
+from gram_dict_query.query import get_lemma_table, get_wordform_table
 
 
 def index(request):
@@ -43,15 +43,28 @@ def gen_dict(request):
 
 
 def gram_dict(request):
-    if 'lemma' in request.GET:
-        lemma = request.GET['lemma']
-    else:
-        lemma = ''
-    context = {'lemma': lemma}
-    try:
-        context['words'] = get_table(lemma=lemma)
-    except:
-        context['error'] = True
+    context = {}
+    search_type = 'lemma'
+    if request.GET:
+        if request.GET['lemma']:
+            lemma = request.GET['lemma']
+            context['lemma'] = lemma
+            context['words'] = get_lemma_table(lemma=lemma)
+        elif request.GET['word_form'] or request.GET['ratio_from'] or request.GET['ratio_to']:
+            search_type = 'word_form'
+            word_form = request.GET['word_form']
+            context['word_form'] = word_form
+            ratio_from = request.GET['ratio_from'] if request.GET['ratio_from'] else 0
+            context['ratio_from'] = ratio_from
+            ratio_to = request.GET['ratio_to'] if request.GET['ratio_to'] else 100
+            context['ratio_to'] = ratio_to
+            if word_form or request.GET['ratio_from'] or request.GET['ratio_to']:
+                if not word_form:
+                    word_form = '%'
+                context['list_wordforms'] = get_wordform_table(wordform=word_form,
+                                                               ratio_from=ratio_from,
+                                                               ratio_to=ratio_to)
+    context['search_type'] = search_type
     return render(request, 'gram_dict.html', context=context)
 
 

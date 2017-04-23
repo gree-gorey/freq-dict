@@ -7,7 +7,7 @@ from .secrets import secrets
 
 def ssh_decorator(host, ssh_user, ssh_passwd):
     def inner_ssh_decorator(func):
-        def func_wrapper(lemma, user, passwd, db):
+        def func_wrapper(**kwargs):
             with sshtunnel.SSHTunnelForwarder(
                     (host, 22),
                     ssh_username=ssh_user,
@@ -16,8 +16,8 @@ def ssh_decorator(host, ssh_user, ssh_passwd):
                     local_bind_address=('127.0.0.1', 3333)
                     ) as tunnel:
                 print('SSH Connection established')
-                output = func(lemma, user, passwd, db)
-            return output
+                output = func(**kwargs)
+                return output
         return func_wrapper
     return inner_ssh_decorator
 
@@ -39,6 +39,31 @@ def get_paradigm(lemma, user, passwd, db):
         "SELECT * FROM std2013 "
         "WHERE Lex like '{}'".format(lemma)
 
+    )
+    data = cursor.fetchall()
+    db.close()
+    return data
+
+
+@ssh_decorator(host=secrets['HOST'], ssh_user=secrets['SSH_USER'], ssh_passwd=secrets['SSH_PASS'])
+def get_wordforms(wordform, ratio_from, ratio_to, user, passwd, db):
+    db = MySQLdb.connect(
+        host='127.0.0.1',
+        port=3333,
+        user=user,
+        passwd=passwd,
+        db=db,
+        charset='utf8',
+        use_unicode=True
+    )
+    print('DB connection established')
+    cursor = db.cursor()
+    cursor.execute(
+        "SELECT Word, Lex, FreqAbs, Gr, ratio FROM std2013 "
+        "WHERE Word like '{}' "
+        "AND "
+        "ratio BETWEEN {} AND {}"
+        "".format(wordform, ratio_from, ratio_to)
     )
     data = cursor.fetchall()
     db.close()

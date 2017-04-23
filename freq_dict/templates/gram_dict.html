@@ -4,9 +4,32 @@
 <div class="container">
     <form>
         <div class="form-group row">
-            <div class="col-sm-10" id="search">
+            <div class="col-sm-1">
+                <span>Lemma: </span>
+            </div>
+            <div class="col-sm-5" id="search">
                 <div id="field"><input autocomplete="off" class="input" id="field1" name="lemma" type="text"
                                        placeholder="Lemma" data-items="8" value="{{ lemma }}"/></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1">
+                <span>Wordform: </span>
+            </div>
+            <div class="col-sm-3" id="word_form_div">
+                <div id="word_form_field"><input autocomplete="off" class="input" id="word_form" name="word_form" type="text"
+                                       placeholder="Wordform" data-items="8" value="{{ word_form }}"/></div>
+            </div>
+            <div class="col-sm-1">
+                <span>Ratio: </span>
+            </div>
+            <div class="col-sm-2" id="freq_from">
+                <div id="field_freq_from"><input autocomplete="off" class="input" id="input_freq_from" name="ratio_from" type="number"
+                                       placeholder="From" data-items="8" value="{{ ratio_from }}"/></div>
+            </div>
+            <div class="col-sm-2" id="freq_to">
+                <div id="field_freq_to"><input autocomplete="off" class="input" id="input_freq_to" name="ratio_to" type="number"
+                                       placeholder="To" data-items="8" value="{{ ratio_to }}"/></div>
             </div>
         </div>
         <fieldset class="form-group row">
@@ -76,60 +99,100 @@
 {% if error is not None %}
 <p>Sorry, we could not find anything.</p>
 {% else %}
+{% if search_type == 'lemma' %}
 {% for lemma, word in words.items %}
 <p>Lemma <b>{{ lemma }}</b></p>
 <table class="table table-responsive table-bordered">
     <thead>
     <th>Case</th>
     <th>Sg</th>
-    <th>freq</th>
+    <th>freq abs</th>
+    <th>%</th>
     <th>Pl</th>
-    <th>freq</th>
+    <th>freq abs</th>
+    <th>%</th>
     </thead>
     <tr>
         <th>Nom.</th>
-        <td>{% for i in word.nomsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nomsg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.nomsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.nompl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nomsg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nompl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.nompl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.nompl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Gen.</th>
-        <td>{% for i in word.gensg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.gensg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.gensg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.genpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.gensg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.genpl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.genpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.genpl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Acc.</th>
-        <td>{% for i in word.accsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accsg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.accsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.accpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accsg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accpl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.accpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.accpl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Dat.</th>
-        <td>{% for i in word.datsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datsg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.datsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.datpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datsg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datpl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.datpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.datpl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Ins.</th>
-        <td>{% for i in word.inssg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inssg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.inssg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.inspl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inssg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inspl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.inspl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.inspl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
     <tr>
         <th>Loc.</th>
-        <td>{% for i in word.locsg %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locsg %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.locsg %}<p>{{ i.1 }}</p>{% endfor %}</td>
-        <td>{% for i in word.locpl %}<p>{{ i.0 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locsg %}<p>{{ i.2 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locpl %}<p><a href="/gram_dict?word_form={{ i.0 }}&lemma=&ratio_from=&ratio_to=">{{ i.0 }}</a></p>{% endfor %}</td>
         <td>{% for i in word.locpl %}<p>{{ i.1 }}</p>{% endfor %}</td>
+        <td>{% for i in word.locpl %}<p>{{ i.2 }}</p>{% endfor %}</td>
     </tr>
 </table>
 {% endfor %}
+{% endif %}
+{% if search_type == 'word_form' %}
+<table class="table table-responsive table-bordered">
+    <thead>
+    <th>Wordform</th>
+    <th>Lemma</th>
+    <th>FreqAbs</th>
+    <th>Gram</th>
+    <th>%</th>
+    </thead>
+    {% for row in list_wordforms %}
+        <tr>
+            {% for item in row|slice:":1" %}
+                <td><a href="/gram_dict?word_form={{ item }}&lemma=&ratio_from=&ratio_to=">{{ item }}</a></td>
+            {% endfor %}
+            {% for item in row|slice:"1:2" %}
+                <td><a href="/gram_dict?lemma={{ item }}&word_form=&ratio_from=&ratio_to=">{{ item }}</a></td>
+            {% endfor %}
+            {% for item in row|slice:"2:" %}
+                <td>{{ item }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
 {% endif %}
 </body>
 {% endblock %}
