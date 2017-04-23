@@ -1,8 +1,8 @@
 import sshtunnel
 import MySQLdb
 import os
-# from .secrets import secrets
-from secrets import secrets
+from .secrets import secrets
+# from secrets import secrets
 
 
 def ssh_decorator(host, ssh_user, ssh_passwd):
@@ -37,7 +37,7 @@ def get_paradigm(lemma, user, passwd, db):
     cursor = db.cursor()
     cursor.execute(
         "SELECT * FROM std2013 "
-        "WHERE Lex='{}'".format(lemma)
+        "WHERE Lex like '{}'".format(lemma)
 
     )
     data = cursor.fetchall()

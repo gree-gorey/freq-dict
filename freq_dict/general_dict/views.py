@@ -43,7 +43,10 @@ def gen_dict(request):
 
 
 def gram_dict(request):
-    lemma = request.GET['lemma']
+    if 'lemma' in request.GET:
+        lemma = request.GET['lemma']
+    else:
+        lemma = ''
     context = {}
     try:
         context['word'] = get_table(lemma=lemma)

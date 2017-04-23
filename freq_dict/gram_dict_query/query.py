@@ -1,8 +1,8 @@
 import os
-# from .ssh import get_paradigm
-# from .secrets import secrets
-from secrets import secrets
-from ssh import get_paradigm
+from .ssh import get_paradigm
+from .secrets import secrets
+# from secrets import secrets
+# from ssh import get_paradigm
 
 
 def get_table(lemma='человек'):
