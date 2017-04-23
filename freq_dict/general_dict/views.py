@@ -47,10 +47,9 @@ def gram_dict(request):
         lemma = request.GET['lemma']
     else:
         lemma = ''
-    context = {}
+    context = {'lemma': lemma}
     try:
-        context['word'] = get_table(lemma=lemma)
-        context['lemma'] = lemma
+        context['words'] = get_table(lemma=lemma)
     except:
         context['error'] = True
     return render(request, 'gram_dict.html', context=context)

@@ -12,21 +12,25 @@ def get_table(lemma='человек'):
         passwd=secrets['DB_PASS'],
         db='RNCgram'
     )
-    word = {}
+    words = {}
     for row in result:
-        print(row)
+        # print(row)
+        lemma = row[2]
+        if lemma not in words:
+            words[lemma] = {}
         pos = row[5]
         if pos == 'S':
             word_form = row[1]
             freq = row[8]
             number, case = row[3].split('=')[1].split(',')
             key = case + number
-            if key not in word:
-                word[key] = [(word_form, freq)]
+            if key not in words[lemma]:
+                words[lemma][key] = [(word_form, freq)]
             else:
-                word[key].append((word_form, freq))
-    return word
+                words[lemma][key].append((word_form, freq))
+    return words
 
 
 if __name__ == '__main__':
-    get_table()
+    table = get_table()
+    print(table)
