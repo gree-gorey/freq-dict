@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import configparser
+
+config = configparser.ConfigParser()
+config.read('app.conf')
+
+MYSQL_USER = config['mysql']['user']
+MYSQL_PASSWORD = config['mysql']['password']
+MYSQL_DB = config['mysql']['db']
+SECRET_KEY = config['django']['secret']
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,9 +28,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1!k4@agpagptr#eq8!bi1mnd)eai6k1e1(%1^ggs52e(o=%lda'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -1,16 +1,14 @@
-import os
-from .ssh import get_paradigm, get_wordforms
-from .secrets import secrets
-# from secrets import secrets
-# from ssh import get_paradigm, get_wordforms
-#
+from django.conf import settings
+from .connect import get_paradigm, get_wordforms
+# from connect import get_paradigm, get_wordforms
+
 
 def get_lemma_table(lemma='стол%'):
     result = get_paradigm(
         lemma=lemma,
-        user=secrets['DB_USER'],
-        passwd=secrets['DB_PASS'],
-        db='RNCgram'
+        user=settings.MYSQL_USER,
+        passwd=settings.MYSQL_PASSWORD,
+        db=settings.MYSQL_DB
     )
     words = {}
     for row in result:
@@ -41,9 +39,9 @@ def get_wordform_table(wordform='стола%', ratio_from=0, ratio_to=100):
         wordform=wordform,
         ratio_from=ratio_from,
         ratio_to=ratio_to,
-        user=secrets['DB_USER'],
-        passwd=secrets['DB_PASS'],
-        db='RNCgram'
+        user=settings.MYSQL_USER,
+        passwd=settings.MYSQL_PASSWORD,
+        db=settings.MYSQL_DB
     )
     return result
 
