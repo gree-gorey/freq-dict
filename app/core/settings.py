@@ -32,7 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['freqdict.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['freqdict.pythonanywhere.com', '127.0.0.1', 'localhost', '0.0.0.0']
 
 
 # Application definition
